@@ -1,0 +1,8 @@
+###
+
+*.o
+*.exe
+
+
+.DS_STORE
+.DS_STORE?
