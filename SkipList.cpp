@@ -113,9 +113,12 @@ void SkipList::dump(char sep) {
 unsigned int SkipList::randHeight() {
     ////////////// Write your code below  ////////////////////////
     //srand(time(0));
-    cout << RAND_MAX << endl;
-    unsigned int t = 1+(rand()%RAND_MAX);
-    cout << t << " =t" << endl;
+    //cout << RAND_MAX << endl;
+    unsigned int t = 1+rand();
+    //cout << t << " =t" << endl;
+    if (t == RAND_MAX) {
+        t--;
+    }
     unsigned int j = 2;
     unsigned randomHeight = 1;
     for (unsigned int i = 1; i <= m_maxHeight-1; i++) {
@@ -125,6 +128,17 @@ unsigned int SkipList::randHeight() {
         j+= j;
         randomHeight++;
     }
+
+    /*int flipCoinRandom;
+    unsigned int height;
+    //srand(time(NULL));
+    for (height = 1; height < m_maxHeight ; height++){
+      flipCoinRandom = rand() % 2;
+      if (flipCoinRandom == 0) return height;
+    }
+    return height; //you have to replace this line with your own.*/
+
+
     return randomHeight; //you have to replace this line with your own.
 }
 
@@ -139,7 +153,7 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode,
 
     Key testKey ("B");
     SkipListNode* testB = new SkipListNode(testKey, 5);
-    for (int i = target->height() - 1; i >=0; i--) {
+    for (int i = target->height() - 1; i >=0; i--) {   // use level
         //cout << *target << endl;
         //cout << target->height() << endl;
         //cout << i << endl;
@@ -185,9 +199,37 @@ SkipListNode* SkipList::del(SkipListNode* target, const Key& key,
         countDelete++;
     }
     ////////////// Write your code below  ////////////////////////
+    SkipListNode* linker = NULL;
+    int currentLevel = target->height() - 1;  //use level
 
 
+    while (target != NULL && currentLevel >= 0) { 
+        while (target->nextAtLevel(currentLevel) != NULL 
+            && key > *target->nextAtLevel(currentLevel)) {
+            target = target->nextAtLevel(currentLevel);
+            
+        }
+        if (target->nextAtLevel(currentLevel) != NULL 
+            && key == *target->nextAtLevel(currentLevel)) {
+            linker = target->nextAtLevel(currentLevel);
+            target->setNextAtLevel(currentLevel, linker->nextAtLevel(currentLevel));
+        }
 
-    return NULL; ///you have to replace this line with your own.
+        currentLevel--;
+    }
+
+    return linker; ///you have to replace this line with your own.
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -14,10 +14,11 @@ int main()
 	//cout << myKey << endl;
 
 
-	/*for (int i = 0; i < 10; i++) {
-		cout << mySkipList.randHeight() << " ";
-	}*/
-	//cout << endl;
+	SkipList mySkipListTest (30);
+	for (int i = 0; i < 30; i++) {
+		cout << mySkipListTest.randHeight() << " ";
+	}
+	cout << endl;
 	
     SkipListNode* a1 = new SkipListNode("A1", 3);
 	SkipListNode* a2 = new SkipListNode("A2", 1);
@@ -63,14 +64,18 @@ int main()
 
 
 
-	/*SkipListNode* testingNodeE2 = new SkipListNode("E2", 3);
-	SkipListNode* testingNodeB = new SkipListNode("Z", 1);
+	/*SkipListNode* testingNodeA = new SkipListNode("0", 3);
+	SkipListNode* testingNodeA1 = new SkipListNode("A1", 1);
 
-	if (*testingNodeB > *testingNodeE2) {
-		cout << "Z is greater than E2" << endl;
+	if (*testingNodeA > *testingNodeA1) {
+		cout << "0 is greater than A1" << endl;
 	} else {
-		cout << "Z is not greater than E2" << endl;
+		cout << "0 is not greater than A1" << endl;
 	}*/
+
+	mySkipList.del("B");
+
+	mySkipList.dump();
 
 	
 
