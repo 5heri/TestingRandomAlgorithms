@@ -14,7 +14,7 @@ int main()
 	//cout << myKey << endl;
 
 
-	SkipList mySkipListTest (30);
+	/*SkipList mySkipListTest (30);
 	for (int i = 0; i < 30; i++) {
 		cout << mySkipListTest.randHeight() << " ";
 	}
@@ -35,7 +35,7 @@ int main()
 	SkipListNode* p = new SkipListNode("P", 1);
 	SkipListNode* s = new SkipListNode("S", 5);
 	SkipListNode* x = new SkipListNode("X", 1);
-	SkipListNode* y = new SkipListNode("Y", 2);*/
+	SkipListNode* y = new SkipListNode("Y", 2);
 
 	//cout << "alsnfla  " << a1->Key() << endl;
 
@@ -62,20 +62,42 @@ int main()
 
 	mySkipList.dump();
 
+	SkipListNode* testFind = mySkipList.find(a1, "B", 0);
+
+	cout << "FOUND  " << *testFind << endl;
 
 
-	/*SkipListNode* testingNodeA = new SkipListNode("0", 3);
+
+	SkipListNode* testingNodeA = new SkipListNode("0", 3);
 	SkipListNode* testingNodeA1 = new SkipListNode("A1", 1);
 
 	if (*testingNodeA > *testingNodeA1) {
 		cout << "0 is greater than A1" << endl;
 	} else {
 		cout << "0 is not greater than A1" << endl;
-	}*/
+	}
 
 	mySkipList.del("B");
 
 	mySkipList.dump();
+	SkipListNode* testFind2 = mySkipList.find(a1, "B", 0);
+
+	if (testFind2 == NULL) {
+		cout << "its null" << endl;
+	}*/
+
+	SkipList mySkipList(10);
+	mySkipList.add("B", true);
+	mySkipList.add("B", true); // no duplicates
+	mySkipList.add("G", true);
+	mySkipList.add("T", true);
+	mySkipList.add("C", true);
+	mySkipList.add("A", true);
+	mySkipList.dump();
+
+
+
+
 
 	
 

@@ -22,11 +22,10 @@ int SkipList::add(const Key& key, bool verbose) {
         if (verbose) {
             cout << "Node " << key << " is already in the list." << endl;
         }
-        cout << "STUPID VERBOSE?? " << endl;
         return 0;
     }
 
-    SkipListNode* newNode = new SkipListNode(key, 1/*randHeight()*/);
+    SkipListNode* newNode = new SkipListNode(key, randHeight());
     if (verbose) {
         cout << "Add new node "<< *newNode << " with height "
              << newNode->height() << endl;
@@ -114,7 +113,7 @@ unsigned int SkipList::randHeight() {
     ////////////// Write your code below  ////////////////////////
     //srand(time(0));
     //cout << RAND_MAX << endl;
-    unsigned int t = 1+rand();
+    /*unsigned int t = 1+rand();
     //cout << t << " =t" << endl;
     if (t == RAND_MAX) {
         t--;
@@ -127,9 +126,9 @@ unsigned int SkipList::randHeight() {
         }
         j+= j;
         randomHeight++;
-    }
+    }*/
 
-    /*int flipCoinRandom;
+    int flipCoinRandom;
     unsigned int height;
     //srand(time(NULL));
     for (height = 1; height < m_maxHeight ; height++){
@@ -139,7 +138,7 @@ unsigned int SkipList::randHeight() {
     return height; //you have to replace this line with your own.*/
 
 
-    return randomHeight; //you have to replace this line with your own.
+    //return randomHeight; //you have to replace this line with your own.
 }
 
 
@@ -151,7 +150,7 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode,
     }
     ////////////// Write your code below  ////////////////////////
 
-    Key testKey ("B");
+    /*Key testKey ("B");
     SkipListNode* testB = new SkipListNode(testKey, 5);
     for (int i = target->height() - 1; i >=0; i--) {   // use level
         //cout << *target << endl;
@@ -167,9 +166,22 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode,
             testB->setNextAtLevel(i, target->nextAtLevel(i));
             target->setNextAtLevel(i, testB);
         }
+    }*/
+
+    for (int i = target->height() - 1; i >=0; i--) {   // use level
+        while (target->nextAtLevel(i) != NULL 
+            && *newNode > *target->nextAtLevel(i)) {
+            target = target->nextAtLevel(i);
+        }
+        if (i < newNode->height()) {
+            newNode->setNextAtLevel(i, target->nextAtLevel(i));
+            target->setNextAtLevel(i, newNode);
+        }
     }
 
-    return 0;  //you have to replace this line with your own.
+
+    return 1;
+    //return 0;  //you have to replace this line with your own.
 }
 
 /////////////////////////////////////////////////////////////
@@ -182,10 +194,19 @@ SkipListNode* SkipList::find(SkipListNode* target, const Key& key,
         countFind++;
     }
     ////////////// Write your code below  ////////////////////////
+    for (int i = target->height() - 1; i >= 0; i--) {
+        while (target->nextAtLevel(i) != NULL 
+            && key > *target->nextAtLevel(i)) {
+            target = target->nextAtLevel(i);
+        }
+    }
 
-
-    return NULL;
-    //return target;
+    if (target->nextAtLevel(0) != NULL 
+        && *target->nextAtLevel(0) == key) {
+        return target->nextAtLevel(0);
+    } else {
+        return NULL;
+    }
 }
 
 
